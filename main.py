@@ -1,25 +1,29 @@
 import pygame
 from resources import create_dazzle
+from resources import init
+
 pygame.init()
-
-carryOn = True
-
+go = True
 clock = pygame.time.Clock()
 
+
 # Main
-while carryOn:
+while go:
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            carryOn = False
+            go = False
 
-        class macgyver:
-            position = ()
-
-            def move(self):
-                return 'move'
-
+    init()
     create_dazzle()
+
+    class macgyver:
+        # mac_position = (450, 300)
+        # mac_pic = pygame.image.load("resources/MacGyver.png").convert()
+        # screen.blit(mac_pic, mac_position)
+
+        def move(self):
+            return 'move'
 
     pygame.display.flip()
 
