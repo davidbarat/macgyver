@@ -6,6 +6,9 @@ pygame.init()
 go = True
 clock = pygame.time.Clock()
 
+init()
+create_dazzle()
+
 
 # Main
 while go:
@@ -14,8 +17,7 @@ while go:
         if event.type == pygame.QUIT:
             go = False
 
-    init()
-    create_dazzle()
+    
 
     class macgyver:
         # mac_position = (450, 300)

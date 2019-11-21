@@ -1,0 +1,4 @@
+.xx......x.....     
+.x.xxx.xxx.x...x
+.xx.x.x.x.xxx.x.x.x
+  
