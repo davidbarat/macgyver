@@ -1,4 +1,4 @@
-.xx......x.....     
-.x.xxx.xxx.x...x
-.xx.x.x.x.xxx.x.x.x
+.xx......x.....q
+.x.xxx.xxx.x...xq
+.xx.x.x.x.xxx.x.x.xq
   

@@ -28,6 +28,7 @@ def create_dazzle():
     # creating dazzle
     file = open('lab.txt', 'r')
     rock_width = 0
+    rock_height = 0
     while 1:
         char = file.read(1)
         print(char)
@@ -36,9 +37,25 @@ def create_dazzle():
             break
         if char == 'x':
             print(rock_width)
-            rock_position = (rock_width, 200)
+            rock_position = (rock_width, rock_height)
             rock_pic = pygame.image.load("resources/rock.png").convert()
             screen.blit(rock_pic, rock_position)
+            # screen.blit(pygame.transform.scale(rock_pic, (50, 50)), (0, 0))
             rock_width += 50
+        if char == '.':
+            print(rock_width)
+            rock_position = (rock_width, rock_height)
+            rock_pic = pygame.image.load("resources/floor.png").convert()
+            screen.blit(rock_pic, rock_position)
+            # screen.blit(pygame.transform.scale(rock_pic, (50, 50)), (0, 0))
+            rock_width += 50
+
+        if char == 'q':
+            rock_height += 50
+            rock_width = 0
+            print(rock_height)
+            rock_position = (rock_width, rock_height)
+            rock_pic = pygame.image.load("resources/rock.png").convert()
+            screen.blit(rock_pic, rock_position)
 
     file.close()
