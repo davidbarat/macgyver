@@ -1,7 +1,7 @@
 import pygame
 
 
-def init():
+def init_screen():
 
     # create window
     pygame.display.set_caption("MacGyver dazzle")
