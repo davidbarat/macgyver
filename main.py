@@ -1,4 +1,5 @@
 import pygame
+import resources
 from resources import create_dazzle
 from resources import init
 
@@ -17,12 +18,8 @@ while go:
         if event.type == pygame.QUIT:
             go = False
 
-    
-
     class macgyver:
-        # mac_position = (450, 300)
-        # mac_pic = pygame.image.load("resources/MacGyver.png").convert()
-        # screen.blit(mac_pic, mac_position)
+        resources.mac_position
 
         def move(self):
             return 'move'
