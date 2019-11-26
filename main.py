@@ -1,14 +1,11 @@
 import pygame
-import resources
+# import resources
 # from resources import create_dazzle
 # from resources import init_screen
 
 pygame.init()
 go = True
 clock = pygame.time.Clock()
-
-# init_screen()
-# create_dazzle()
 
 
 class dazzle():
@@ -28,9 +25,10 @@ class dazzle():
     def create_dazzle(self):
 
         # creating dazzle
-        file = open('lab.txt', 'r')
+        file = open('resources/lab.txt', 'r')
         cursor_width = 0
         cursor_height = 0
+        # global mac_position
         while 1:
             char = file.read(1)
 
@@ -74,28 +72,69 @@ class dazzle():
 
 
 class character(dazzle):
+    flag = 0
 
     def __init__(self):
         print('init class character')
+        # global mac_initial_position_list
+        self.mac_initial_position_list = list(mac_position)
+        # self.mac_final_position = []
+        # self.mac_initial_width = 0
+        # self.mac_initial_eight = 0
 
     def move(self, direction):
+        global mac_initial_position_list
+        global mac_final_position
         if direction == 'down':
-            mac_initial_position = mac_position
-            mac_initial_position_list = list(mac_position)
-            print(mac_initial_position_list)
-            rock_pic = pygame.image.load(
-                "resources/floor.png").convert()
-            screen.blit(rock_pic, mac_initial_position)
-            new_mac_position_list = [x + 50 for x in mac_initial_position_list[:2]]
-            print(new_mac_position_list)
-            mac_pic = pygame.image.load(
-                "resources/MacGyver.png").convert()
-            screen.blit(mac_pic, tuple(new_mac_position_list))
+            print('methode move')
+            if not self.flag:
+                print(self.flag)
+                print(mac_position)
+                print(self.mac_initial_position_list)
+                # mac_initial_position = mac_position
+                # mac_initial_position_list = list(mac_position)
+                self.mac_initial_position_width = self.mac_initial_position_list[0]
+                self.mac_initial_position_eight = self.mac_initial_position_list[1]
+                self.rock_pic = pygame.image.load(
+                    "resources/floor.png").convert()
+                screen.blit(self.rock_pic, self.mac_initial_position_list)
+                self.mac_initial_position_eight += 50
+                self.mac_pic = pygame.image.load(
+                    "resources/MacGyver.png").convert()
+                screen.blit(self.mac_pic, (
+                    self.mac_initial_position_width,
+                    self.mac_initial_position_eight))
+                self.mac_final_position = [self.mac_initial_position_width,
+                                           self.mac_initial_position_eight]
+                # mac_initial_position = mac_final_position
+                self.flag += 1
+                print(self.flag)
+
+            else:
+                self.mac_initial_position_width = self.mac_final_position[0]
+                self.mac_initial_position_eight = self.mac_final_position[1]
+                # print(mac_initial_position)
+                self.rock_pic = pygame.image.load(
+                    "resources/floor.png").convert()
+                screen.blit(self.rock_pic, (
+                    self.mac_initial_position_width,
+                    self.mac_initial_position_eight))
+                self.mac_initial_position_eight += 50
+                mac_pic = pygame.image.load("resources/MacGyver.png").convert()
+                screen.blit(mac_pic, (
+                    self.mac_initial_position_width,
+                    self.mac_initial_position_eight))
+                self.mac_final_position = [self.mac_initial_position_width,
+                                           self.mac_initial_position_eight]
+                # mac_initial_position = mac_final_position
+                self.flag += 1
+                print(self.flag)
 
 
 mydazzle = dazzle()
 mydazzle.init_screen()
 mydazzle.create_dazzle()
+macgyver = character()
 
 # Main
 while go:
@@ -103,11 +142,9 @@ while go:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             go = False
-        if event.type == pygame.KEYDOWN:
-            print('hello keydown')
-            # key = keydown
-            macgyver = character()
-            macgyver.move('down')
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_w:
+                macgyver.move('down')
 
     pygame.display.flip()
 
