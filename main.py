@@ -11,6 +11,7 @@ clock = pygame.time.Clock()
 class dazzle():
 
     def __init__(self):
+
         print('init dazzle')
 
     def init_screen(self):
@@ -22,13 +23,22 @@ class dazzle():
         size = (850, 650)
         screen = pygame.display.set_mode(size)
 
+    def get_limit_dazzle(self):
+
+        file = open('resources/lab.txt', 'r')
+        numberofline = 0
+        for line in file:
+            numberofline += 1
+
+        numberofline -= 1  # we start at coord (0,0)
+        return numberofline * 50
+
     def create_dazzle(self):
 
         # creating dazzle
         file = open('resources/lab.txt', 'r')
         cursor_width = 0
         cursor_height = 0
-        # global mac_position
         while 1:
             char = file.read(1)
 
@@ -75,7 +85,6 @@ class character(dazzle):
     flag = 0
 
     def __init__(self):
-        print('init class character')
         # global mac_initial_position_list
         self.mac_initial_position_list = list(mac_position)
         # self.mac_final_position = []
@@ -86,13 +95,10 @@ class character(dazzle):
         global mac_initial_position_list
         global mac_final_position
         if direction == 'down':
-            print('methode move')
             if not self.flag:
                 print(self.flag)
                 print(mac_position)
                 print(self.mac_initial_position_list)
-                # mac_initial_position = mac_position
-                # mac_initial_position_list = list(mac_position)
                 self.mac_initial_position_width = self.mac_initial_position_list[0]
                 self.mac_initial_position_eight = self.mac_initial_position_list[1]
                 self.rock_pic = pygame.image.load(
@@ -106,34 +112,37 @@ class character(dazzle):
                     self.mac_initial_position_eight))
                 self.mac_final_position = [self.mac_initial_position_width,
                                            self.mac_initial_position_eight]
-                # mac_initial_position = mac_final_position
                 self.flag += 1
-                print(self.flag)
 
             else:
                 self.mac_initial_position_width = self.mac_final_position[0]
                 self.mac_initial_position_eight = self.mac_final_position[1]
                 # print(mac_initial_position)
-                self.rock_pic = pygame.image.load(
-                    "resources/floor.png").convert()
-                screen.blit(self.rock_pic, (
-                    self.mac_initial_position_width,
-                    self.mac_initial_position_eight))
-                self.mac_initial_position_eight += 50
-                mac_pic = pygame.image.load("resources/MacGyver.png").convert()
-                screen.blit(mac_pic, (
-                    self.mac_initial_position_width,
-                    self.mac_initial_position_eight))
-                self.mac_final_position = [self.mac_initial_position_width,
-                                           self.mac_initial_position_eight]
-                # mac_initial_position = mac_final_position
-                self.flag += 1
-                print(self.flag)
+                print(height_limit)
+                print(self.mac_initial_position_eight)
+                if self.mac_initial_position_eight >= height_limit:
+                    print('no move')
+                else:
+                    self.rock_pic = pygame.image.load(
+                        "resources/floor.png").convert()
+                    screen.blit(self.rock_pic, (
+                        self.mac_initial_position_width,
+                        self.mac_initial_position_eight))
+                    self.mac_initial_position_eight += 50
+                    mac_pic = pygame.image.load(
+                        "resources/MacGyver.png").convert()
+                    screen.blit(mac_pic, (
+                        self.mac_initial_position_width,
+                        self.mac_initial_position_eight))
+                    self.mac_final_position = [self.mac_initial_position_width,
+                                               self.mac_initial_position_eight]
+                    self.flag += 1
 
 
 mydazzle = dazzle()
 mydazzle.init_screen()
 mydazzle.create_dazzle()
+height_limit = mydazzle.get_limit_dazzle()
 macgyver = character()
 
 # Main
@@ -143,7 +152,7 @@ while go:
         if event.type == pygame.QUIT:
             go = False
         elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_w:
+            if event.key == pygame.K_DOWN:
                 macgyver.move('down')
 
     pygame.display.flip()
