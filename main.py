@@ -20,7 +20,7 @@ class dazzle():
         pygame.display.set_caption("MacGyver dazzle")
         global size
         global screen
-        size = (850, 650)
+        size = (850, 850)
         screen = pygame.display.set_mode(size)
 
     def get_limit_dazzle(self):
