@@ -1,4 +1,5 @@
 import pygame
+import random
 # import resources
 # from resources import create_dazzle
 # from resources import init_screen
@@ -6,6 +7,7 @@ import pygame
 pygame.init()
 go = True
 clock = pygame.time.Clock()
+list_object = ['ether', 'aiguille', 'tube']
 
 
 class dazzle():
@@ -81,7 +83,7 @@ class dazzle():
         file.close()
 
 
-class character(dazzle):
+class character():
     first_move = 0
 
     def __init__(self):
@@ -135,7 +137,7 @@ class character(dazzle):
                             self.mac_initial_position_width,
                             self.mac_initial_position_eight))
                 print(self.mac_initial_position_list)
-            
+
                 if direction == 'down':
                     print('down')
                     # print(self.direction)
@@ -148,6 +150,7 @@ class character(dazzle):
                     self.mac_initial_position_width -= 50
 
                 print(self.mac_initial_position_eight)
+
                 self.mac_pic = pygame.image.load(
                     "resources/MacGyver.png").convert()
                 screen.blit(self.mac_pic, (
@@ -158,9 +161,75 @@ class character(dazzle):
                 self.first_move += 1
 
 
+class object():
+
+    def __init__(self):
+
+        self.file = open('resources/lab.txt', 'r')
+        self.object_height = 0
+        self.object_width = 0
+        self.list_position_object = []
+
+    def get_position(self):
+
+        for char in self.file.read():
+            # print(char)
+            if char == '.':
+                self.object_width += 50
+                self.list_position_object.append((self.object_width,
+                                                  self.object_height))
+            if char == '\n':
+                self.object_height += 50
+                self.object_width = 0
+
+        self.final_position_object = random.choice(self.list_position_object)
+        return(self.final_position_object)
+
+    def print_pic(self, t_object, position_coord):
+        print('print_pic')
+        print(t_object)
+        if t_object == 'seringue':
+            print(t_object)
+            self.object_pic = pygame.image.load(
+                "resources/seringue.png").convert()
+            screen.blit(self.object_pic, position_coord)
+        if t_object == 'aiguille':
+            self.object_pic = pygame.image.load(
+                "resources/aiguille.png").convert()
+            screen.blit(self.object_pic, position_coord)
+        if t_object == 'ether':
+            print(position_coord)
+            self.object_pic = pygame.image.load(
+                "resources/ether.png").convert()
+            screen.blit(self.object_pic, position_coord)
+
+
 mydazzle = dazzle()
 mydazzle.init_screen()
 mydazzle.create_dazzle()
+"""
+for item in list_object:
+    print(item)
+    item = object()
+    position_item = item.get_position()
+    print(position_item)
+    item.print_pic(item, position_item)
+
+"""
+seringue = object()
+position_seringue = seringue.get_position()
+print(position_seringue)
+seringue.print_pic('seringue', position_seringue)
+ether = object()
+position_ether = ether.get_position()
+print(position_ether)
+ether.print_pic('ether', position_ether)
+aiguille = object()
+position_aiguille = aiguille.get_position()
+print(position_aiguille)
+aiguille.print_pic('aiguille', position_aiguille)
+
+
 height_limit = mydazzle.get_limit_dazzle()
 macgyver = character()
 
