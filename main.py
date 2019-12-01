@@ -186,19 +186,15 @@ class object():
         return(self.final_position_object)
 
     def print_pic(self, t_object, position_coord):
-        print('print_pic')
-        print(t_object)
-        if t_object == 'seringue':
-            print(t_object)
+        if t_object == 'tube':
             self.object_pic = pygame.image.load(
-                "resources/seringue.png").convert()
+                "resources/tube.png").convert()
             screen.blit(self.object_pic, position_coord)
         if t_object == 'aiguille':
             self.object_pic = pygame.image.load(
                 "resources/aiguille.png").convert()
             screen.blit(self.object_pic, position_coord)
         if t_object == 'ether':
-            print(position_coord)
             self.object_pic = pygame.image.load(
                 "resources/ether.png").convert()
             screen.blit(self.object_pic, position_coord)
@@ -207,28 +203,13 @@ class object():
 mydazzle = dazzle()
 mydazzle.init_screen()
 mydazzle.create_dazzle()
-"""
+
 for item in list_object:
     print(item)
-    item = object()
-    position_item = item.get_position()
+    item_object = object()
+    position_item = item_object.get_position()
     print(position_item)
-    item.print_pic(item, position_item)
-
-"""
-seringue = object()
-position_seringue = seringue.get_position()
-print(position_seringue)
-seringue.print_pic('seringue', position_seringue)
-ether = object()
-position_ether = ether.get_position()
-print(position_ether)
-ether.print_pic('ether', position_ether)
-aiguille = object()
-position_aiguille = aiguille.get_position()
-print(position_aiguille)
-aiguille.print_pic('aiguille', position_aiguille)
-
+    item_object.print_pic(item, position_item)
 
 height_limit = mydazzle.get_limit_dazzle()
 macgyver = character()
