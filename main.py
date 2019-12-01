@@ -15,6 +15,7 @@ class dazzle():
     def __init__(self):
 
         print('init dazzle')
+        self.list_position_rock = []
 
     def init_screen(self):
 
@@ -22,7 +23,7 @@ class dazzle():
         pygame.display.set_caption("MacGyver dazzle")
         global size
         global screen
-        size = (850, 850)
+        size = (900, 850)
         screen = pygame.display.set_mode(size)
 
     def get_limit_dazzle(self):
@@ -51,12 +52,15 @@ class dazzle():
                 rock_pic = pygame.image.load(
                     "resources/rock.png").convert()
                 screen.blit(rock_pic, cursor_position)
+                self.list_position_rock.append((cursor_width,
+                                                cursor_height))
                 cursor_width += 50
 
             if char == 'M':
-                global mac_position
+                # global mac_position
+                # self.mac_position
                 cursor_position = (cursor_width, cursor_height)
-                mac_position = cursor_position
+                self.mac_position = cursor_position
                 mac_pic = pygame.image.load(
                     "resources/MacGyver.png").convert()
                 screen.blit(mac_pic, cursor_position)
@@ -80,22 +84,32 @@ class dazzle():
                 cursor_width = 0
                 cursor_height += 50
 
+        # print(self.list_position_rock)
         file.close()
+        return self.list_position_rock, self.mac_position
 
 
 class character():
     first_move = 0
 
     def __init__(self):
+        print('class character')
         # global mac_initial_position_list
-        self.mac_initial_position_list = list(mac_position)
+        # print(self.mac_position)
+        # self.mac_initial_position_list = list(self.mac_position)
         # self.mac_final_position = []
         # self.mac_initial_width = 0
         # self.mac_initial_eight = 0
 
-    def move(self, direction):
+    def check_wall(self, direction):
+        if direction == 'down':
+            print(direction)
+
+    def move(self, direction, mac_position):
         global mac_initial_position_list
         global mac_final_position
+        print(mac_position)
+        self.mac_initial_position_list = list(mac_position)
         if not self.first_move:
             print(self.first_move)
             # print(self.mac_initial_position_width)
@@ -202,7 +216,9 @@ class object():
 
 mydazzle = dazzle()
 mydazzle.init_screen()
-mydazzle.create_dazzle()
+# mydazzle.create_dazzle()
+list_rock, mac_position = mydazzle.create_dazzle()
+# list_rock = mydazzle.create_dazzle()
 
 for item in list_object:
     print(item)
@@ -222,14 +238,14 @@ while go:
             go = False
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_DOWN:
-                macgyver.move('down')
+                macgyver.check_wall('down')
+                macgyver.move('down', mac_position)
             if event.key == pygame.K_UP:
                 macgyver.move('up')
             if event.key == pygame.K_RIGHT:
                 macgyver.move('right')
             if event.key == pygame.K_LEFT:
                 macgyver.move('left')
-
 
     pygame.display.flip()
 
