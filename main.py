@@ -101,9 +101,16 @@ class character():
         # self.mac_initial_width = 0
         # self.mac_initial_eight = 0
 
-    def check_wall(self, direction):
+    def check_wall(self, direction, list_rock, mac_position):
         if direction == 'down':
+            print('check_wall')
             print(direction)
+            print(list_rock)
+            print(mac_position)
+            if True:  # check next position is a rock position
+                return True
+            else:
+                return False
 
     def move(self, direction, mac_position):
         global mac_initial_position_list
@@ -218,8 +225,8 @@ mydazzle = dazzle()
 mydazzle.init_screen()
 # mydazzle.create_dazzle()
 list_rock, mac_position = mydazzle.create_dazzle()
-# list_rock = mydazzle.create_dazzle()
 
+# item get position
 for item in list_object:
     print(item)
     item_object = object()
@@ -238,7 +245,7 @@ while go:
             go = False
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_DOWN:
-                macgyver.check_wall('down')
+                macgyver.check_wall('down', list_rock, mac_position)
                 macgyver.move('down', mac_position)
             if event.key == pygame.K_UP:
                 macgyver.move('up')
@@ -249,7 +256,7 @@ while go:
 
     pygame.display.flip()
 
-    # --- Limit to 60 frames per second
+    # Limit to 60 frames per second
     clock.tick(60)
 
 pygame.quit()
