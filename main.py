@@ -115,13 +115,15 @@ class character():
     def move(self, direction, mac_position):
         global mac_initial_position_list
         global mac_final_position
+        print('move')
         print(mac_position)
+        self.mac_final_position = mac_position
         self.mac_initial_position_list = list(mac_position)
         if not self.first_move:
             print(self.first_move)
             # print(self.mac_initial_position_width)
-            self.mac_initial_position_width = self.mac_initial_position_list[0]
-            self.mac_initial_position_eight = self.mac_initial_position_list[1]
+            self.mac_initial_position_width = self.mac_final_position[0]
+            self.mac_initial_position_eight = self.mac_final_position[1]
             self.rock_pic = pygame.image.load(
                 "resources/floor.png").convert()
             screen.blit(self.rock_pic, self.mac_initial_position_list)
@@ -139,8 +141,12 @@ class character():
             screen.blit(self.mac_pic, (
                         self.mac_initial_position_width,
                         self.mac_initial_position_eight))
+            # self.mac_final_position = [self.mac_initial_position_width,
+            #                            self.mac_initial_position_eight]
+            print(mac_position)
             self.mac_final_position = [self.mac_initial_position_width,
                                        self.mac_initial_position_eight]
+            print(self.mac_final_position)
             self.first_move += 1
 
         else:
@@ -150,6 +156,7 @@ class character():
                 print(self.first_move)
                 print('hello')
                 # print(self.mac_initial_position_width)
+                print(self.mac_final_position)
                 self.mac_initial_position_width = self.mac_final_position[0]
                 self.mac_initial_position_eight = self.mac_final_position[1]
                 self.rock_pic = pygame.image.load(
