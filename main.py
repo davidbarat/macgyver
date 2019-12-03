@@ -218,7 +218,6 @@ class object():
 
 mydazzle = dazzle()
 mydazzle.init_screen()
-# mydazzle.create_dazzle()
 list_rock, mac_position = mydazzle.create_dazzle()
 
 # item get position
