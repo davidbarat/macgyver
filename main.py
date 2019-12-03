@@ -223,13 +223,11 @@ list_rock, mac_position = mydazzle.create_dazzle()
 
 # item get position
 for item in list_object:
-    print(item)
     item_object = object()
     position_item = item_object.get_position()
     print(position_item)
     item_object.print_pic(item, position_item)
 
-height_limit = mydazzle.get_limit_dazzle()
 macgyver = character()
 
 # Main
