@@ -1,13 +1,16 @@
 import pygame
 import random
-# import resources
-# from resources import create_dazzle
-# from resources import init_screen
+
 
 pygame.init()
 go = True
 clock = pygame.time.Clock()
 list_object = ['ether', 'aiguille', 'tube']
+# 15 sprites by 50 pixels
+width_limit = 14 * 50
+height_limit = 15 * 50
+width_min = 0
+height_min = 0
 
 
 class dazzle():
@@ -90,103 +93,88 @@ class dazzle():
 
 
 class character():
-    first_move = 0
 
     def __init__(self):
         print('class character')
-        # global mac_initial_position_list
-        # print(self.mac_position)
-        # self.mac_initial_position_list = list(self.mac_position)
-        # self.mac_final_position = []
-        # self.mac_initial_width = 0
-        # self.mac_initial_eight = 0
+        self.mac_final_position = mac_position
 
     def check_wall(self, direction, list_rock, mac_position):
         if direction == 'down':
-            print('check_wall')
-            print(direction)
-            print(list_rock)
-            print(mac_position)
-            if True:  # check next position is a rock position
+            self.mac_initial_position_width = self.mac_final_position[0]
+            self.mac_initial_position_eight = self.mac_final_position[1]
+            self.test_position_rock = (self.mac_initial_position_width,
+                                       self.mac_initial_position_eight + 50)
+            print(self.test_position_rock)
+            # check next position is a rock position
+            if (self.test_position_rock) in list_rock:
+                return True
+            else:
+                return False
+
+        if direction == 'up':
+            self.mac_initial_position_width = self.mac_final_position[0]
+            self.mac_initial_position_eight = self.mac_final_position[1]
+            self.test_position_rock = (self.mac_initial_position_width,
+                                       self.mac_initial_position_eight - 50)
+            print(self.test_position_rock)
+            # check next position is a rock position
+            if (self.test_position_rock) in list_rock:
+                return True
+            else:
+                return False
+
+        if direction == 'right':
+            self.mac_initial_position_width = self.mac_final_position[0]
+            self.mac_initial_position_eight = self.mac_final_position[1]
+            self.test_position_rock = (self.mac_initial_position_width + 50,
+                                       self.mac_initial_position_eight)
+            print(self.test_position_rock)
+            # check next position is a rock position
+            if (self.test_position_rock) in list_rock:
+                return True
+            else:
+                return False
+
+        if direction == 'left':
+            self.mac_initial_position_width = self.mac_final_position[0]
+            self.mac_initial_position_eight = self.mac_final_position[1]
+            self.test_position_rock = (self.mac_initial_position_width - 50,
+                                       self.mac_initial_position_eight)
+            print(self.test_position_rock)
+            # check next position is a rock position
+            if (self.test_position_rock) in list_rock:
                 return True
             else:
                 return False
 
     def move(self, direction, mac_position):
-        global mac_initial_position_list
-        global mac_final_position
-        print('move')
-        print(mac_position)
-        self.mac_final_position = mac_position
         self.mac_initial_position_list = list(mac_position)
-        if not self.first_move:
-            print(self.first_move)
-            # print(self.mac_initial_position_width)
-            self.mac_initial_position_width = self.mac_final_position[0]
-            self.mac_initial_position_eight = self.mac_final_position[1]
+        self.mac_initial_position_width = self.mac_final_position[0]
+        self.mac_initial_position_eight = self.mac_final_position[1]
+        # next move
+        if direction == 'down':
+            self.mac_initial_position_eight += 50
+        if direction == 'up':
+            self.mac_initial_position_eight -= 50
+        if direction == 'right':
+            self.mac_initial_position_width += 50
+        if direction == 'left':
+            self.mac_initial_position_width -= 50
+        print(width_limit)
+        print(height_limit)
+        if not (self.mac_initial_position_width > width_limit or self.mac_initial_position_eight > height_limit or self.mac_initial_position_width < width_min or self.mac_initial_position_eight < height_min):
             self.rock_pic = pygame.image.load(
                 "resources/floor.png").convert()
-            screen.blit(self.rock_pic, self.mac_initial_position_list)
-            if direction == 'down':
-                self.mac_initial_position_eight += 50
-            if direction == 'up':
-                self.mac_initial_position_eight -= 50
-            if direction == 'right':
-                self.mac_initial_position_width += 50
-            if direction == 'left':
-                self.mac_initial_position_width -= 50
-
+            screen.blit(self.rock_pic, self.mac_final_position)
             self.mac_pic = pygame.image.load(
                 "resources/MacGyver.png").convert()
             screen.blit(self.mac_pic, (
                         self.mac_initial_position_width,
                         self.mac_initial_position_eight))
-            # self.mac_final_position = [self.mac_initial_position_width,
-            #                            self.mac_initial_position_eight]
-            print(mac_position)
+            # print(mac_position)
             self.mac_final_position = [self.mac_initial_position_width,
                                        self.mac_initial_position_eight]
-            print(self.mac_final_position)
-            self.first_move += 1
-
-        else:
-            if self.mac_initial_position_eight >= height_limit:
-                print('no move')
-            else:
-                print(self.first_move)
-                print('hello')
-                # print(self.mac_initial_position_width)
-                print(self.mac_final_position)
-                self.mac_initial_position_width = self.mac_final_position[0]
-                self.mac_initial_position_eight = self.mac_final_position[1]
-                self.rock_pic = pygame.image.load(
-                    "resources/floor.png").convert()
-                screen.blit(self.rock_pic, (
-                            self.mac_initial_position_width,
-                            self.mac_initial_position_eight))
-                print(self.mac_initial_position_list)
-
-                if direction == 'down':
-                    print('down')
-                    # print(self.direction)
-                    self.mac_initial_position_eight += 50
-                if direction == 'up':
-                    self.mac_initial_position_eight -= 50
-                if direction == 'right':
-                    self.mac_initial_position_width += 50
-                if direction == 'left':
-                    self.mac_initial_position_width -= 50
-
-                print(self.mac_initial_position_eight)
-
-                self.mac_pic = pygame.image.load(
-                    "resources/MacGyver.png").convert()
-                screen.blit(self.mac_pic, (
-                            self.mac_initial_position_width,
-                            self.mac_initial_position_eight))
-                self.mac_final_position = [self.mac_initial_position_width,
-                                           self.mac_initial_position_eight]
-                self.first_move += 1
+        # print(self.mac_final_position)
 
 
 class object():
@@ -252,14 +240,17 @@ while go:
             go = False
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_DOWN:
-                macgyver.check_wall('down', list_rock, mac_position)
-                macgyver.move('down', mac_position)
+                if not macgyver.check_wall('down', list_rock, mac_position):
+                    macgyver.move('down', mac_position)
             if event.key == pygame.K_UP:
-                macgyver.move('up')
+                if not macgyver.check_wall('up', list_rock, mac_position):
+                    macgyver.move('up', mac_position)
             if event.key == pygame.K_RIGHT:
-                macgyver.move('right')
+                if not macgyver.check_wall('right', list_rock, mac_position):
+                    macgyver.move('right', mac_position)
             if event.key == pygame.K_LEFT:
-                macgyver.move('left')
+                if not macgyver.check_wall('left', list_rock, mac_position):
+                    macgyver.move('left', mac_position)
 
     pygame.display.flip()
 
