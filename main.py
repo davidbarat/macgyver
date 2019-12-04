@@ -6,6 +6,8 @@ pygame.init()
 go = True
 clock = pygame.time.Clock()
 list_object = ['ether', 'aiguille', 'tube']
+picked_object = []
+list_position_object_coord = []
 # 15 sprites by 50 pixels
 width_limit = 14 * 50
 height_limit = 15 * 50
@@ -174,6 +176,12 @@ class character():
             # print(mac_position)
             self.mac_final_position = [self.mac_initial_position_width,
                                        self.mac_initial_position_eight]
+
+            if self.mac_final_position in list_position_object_coord:
+                print('good')
+                self.object_pic = pygame.image.load(
+                    "resources/tube.png").convert()
+                screen.blit(self.object_pic, (800, 50))
         # print(self.mac_final_position)
 
 
@@ -206,14 +214,18 @@ class object():
             self.object_pic = pygame.image.load(
                 "resources/tube.png").convert()
             screen.blit(self.object_pic, position_coord)
+            # list_position_object_coord.append(position_coord)
         if t_object == 'aiguille':
             self.object_pic = pygame.image.load(
                 "resources/aiguille.png").convert()
             screen.blit(self.object_pic, position_coord)
+            # list_position_object_coord.append(position_coord)
         if t_object == 'ether':
             self.object_pic = pygame.image.load(
                 "resources/ether.png").convert()
             screen.blit(self.object_pic, position_coord)
+            # list_position_object_coord.append(position_coord)
+        # print(list_position_object_coord)
 
 
 mydazzle = dazzle()
@@ -226,6 +238,7 @@ for item in list_object:
     position_item = item_object.get_position()
     print(position_item)
     item_object.print_pic(item, position_item)
+    list_position_object_coord.append(position_item)
 
 macgyver = character()
 
