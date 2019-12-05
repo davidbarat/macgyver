@@ -176,8 +176,10 @@ class character():
             # print(mac_position)
             self.mac_final_position = [self.mac_initial_position_width,
                                        self.mac_initial_position_eight]
+            print(list_position_object_coord)
+            print(self.mac_final_position)
 
-            if self.mac_final_position in list_position_object_coord:
+            if list(self.mac_final_position) in list_position_object_coord:
                 print('good')
                 self.object_pic = pygame.image.load(
                     "resources/tube.png").convert()
