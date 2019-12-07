@@ -87,14 +87,12 @@ class character():
 
     def __init__(self):
         print('class character')
-        # print(maze.mac_position)
-        # self.mac_final_position = mac_position
-        # self.mac_final_position = maze.mac_position
         # 15 sprites by 50 pixels
         self.width_limit = 14 * 50
         self.height_limit = 14 * 50
         self.width_min = 0
         self.height_min = 0
+        self.count_object = 0
         # self.mac_final_position = maze.mac_position
 
     def check_wall(self, direction, list_rock, mac_position):
@@ -104,12 +102,7 @@ class character():
             self.mac_initial_position_eight = self.mac_final_position[1]
             self.test_position_rock = (self.mac_initial_position_width,
                                        self.mac_initial_position_eight + 50)
-            print(self.test_position_rock)
-            # check next position is a rock position
-            if (self.test_position_rock) in list_rock:
-                return True
-            else:
-                return False
+            # print(self.test_position_rock)
 
         if direction == 'up':
             self.mac_initial_position_width = self.mac_final_position[0]
@@ -117,35 +110,26 @@ class character():
             self.test_position_rock = (self.mac_initial_position_width,
                                        self.mac_initial_position_eight - 50)
             # print(self.test_position_rock)
-            # check next position is a rock position
-            if (self.test_position_rock) in list_rock:
-                return True
-            else:
-                return False
 
         if direction == 'right':
             self.mac_initial_position_width = self.mac_final_position[0]
             self.mac_initial_position_eight = self.mac_final_position[1]
             self.test_position_rock = (self.mac_initial_position_width + 50,
                                        self.mac_initial_position_eight)
-            print(self.test_position_rock)
-            # check next position is a rock position
-            if (self.test_position_rock) in list_rock:
-                return True
-            else:
-                return False
+            # print(self.test_position_rock)
 
         if direction == 'left':
             self.mac_initial_position_width = self.mac_final_position[0]
             self.mac_initial_position_eight = self.mac_final_position[1]
             self.test_position_rock = (self.mac_initial_position_width - 50,
                                        self.mac_initial_position_eight)
-            print(self.test_position_rock)
-            # check next position is a rock position
-            if (self.test_position_rock) in list_rock:
-                return True
-            else:
-                return False
+            # print(self.test_position_rock)
+
+        if (self.test_position_rock) in list_rock:
+            return True
+        else:
+            return False
+
 
     def move(self, direction, mac_position, screen, list_position_object_coord):
 
@@ -200,10 +184,14 @@ class character():
             print(list_position_object_coord)
             print(self.list_coord_mac)
             for idx, i in enumerate(list_position_object_coord):
-                # print('for')
-                print(i)
                 if list(i) == self.mac_final_position:
-                    print('test ok')
+                    """ attention count, il incremente mm qd
+                    objet est déja récupéré"""
+                    self.count_object += 1
+                    self.font = pygame.font.SysFont('Comic Sans MS', 30)
+                    self.color = (132, 0, 140)
+                    self.text = self.font.render("Inventory", True, self.color)
+                    # screen.blit(self.text, (775, 0))
                     if idx == 0:
                         self.object_pic = pygame.image.load(
                             "resources/ether.png").convert()
@@ -211,11 +199,11 @@ class character():
                     elif idx == 1:
                         self.object_pic = pygame.image.load(
                             "resources/aiguille.png").convert()
-                        screen.blit(self.object_pic, (800, 100))
+                        screen.blit(self.object_pic, (800, 150))
                     elif idx == 2:
                         self.object_pic = pygame.image.load(
                             "resources/tube.png").convert()
-                        screen.blit(self.object_pic, (800, 150))
+                        screen.blit(self.object_pic, (800, 250))
 
             return self.mac_final_position
 
@@ -233,7 +221,6 @@ class object():
 
         with open('resources/lab.txt') as self.file:
             for char in self.file.read():
-                # print(char)
                 if char == '.':
                     self.object_width += 50
                     self.list_position_object.append((self.object_width,
@@ -242,8 +229,9 @@ class object():
                     self.object_height += 50
                     self.object_width = 0
 
-            self.final_position_object = random.choice(
-                self.list_position_object)
+            self.final_position_object = random.sample(
+                self.list_position_object, 3)
+            # print(self.final_position_object)
             return(self.final_position_object)
 
     def print_pic(self, t_object, position_coord, screen):

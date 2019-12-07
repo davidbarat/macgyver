@@ -16,17 +16,21 @@ my_maze.init_screen()
 # list_rock, mac_position = my_maze.create_maze()
 list_rock = my_maze.create_maze()
 # print('position de mac')
-print(my_maze.mac_position)
-david = my_maze.mac_position
-print(david)
+# print(my_maze.mac_position)
+# david = my_maze.mac_position
+# print(david)
 # item get position
 for item in list_object:
     item_object = object()
-    position_item = item_object.get_position()
-    print(position_item)
-    item_object.print_pic(item, position_item, my_maze.screen)
-    list_position_object_coord.append(position_item)
 
+position_item = item_object.get_position()
+print(position_item)
+
+for idx, item in enumerate(list_object):
+    item_object.print_pic(item, position_item[idx], my_maze.screen)
+    list_position_object_coord = position_item
+
+print(list_position_object_coord)
 macgyver = character()
 
 # Main
@@ -69,6 +73,7 @@ while go:
                                                      list_position_object_coord
                                                      )
             my_maze.mac_position = new_position_mac
+            print('count object ', macgyver.count_object)
 
     pygame.display.flip()
 
