@@ -148,6 +148,7 @@ class character():
                 return False
 
     def move(self, direction, mac_position, screen, list_position_object_coord):
+
         # self.mac_initial_position_list = list(mac_position)
         # print(self.mac_initial_position_list)
         # self.mac_initial_position_list = list(mac_position)
@@ -157,8 +158,6 @@ class character():
         print(self.mac_initial_position_width, self.mac_initial_position_eight)
         # self.mac_initial_position_width = mac_position[0]
         # self.mac_initial_position_eight = mac_position[1]
-        print('----------------------')
-        print(mac_position)
         print('move')
         # next move
         if direction == 'down':
@@ -190,16 +189,36 @@ class character():
             """ mac_position = [self.mac_initial_position_width,
                             self.mac_initial_position_eight]"""
             # print(list_position_object_coord)
-            print(mac_position)
-            print(self.mac_final_position)
+            # print(self.mac_final_position)
+            # print(list_position_object_coord)
+            # self.coord_x_mac = self.mac_final_position[0]
+            # self.coord_y_mac = self.mac_final_position[1]
+            self.list_coord_mac = [(self.mac_final_position[0],
+                                    self.mac_final_position[1])]
 
-            if list(self.mac_final_position) in list_position_object_coord:
-                print('good')
-                self.object_pic = pygame.image.load(
-                    "resources/tube.png").convert()
-                screen.blit(self.object_pic, (800, 50))
-        # print(self.mac_final_position)
-        return self.mac_final_position
+            print("compare position mac pos object")
+            print(list_position_object_coord)
+            print(self.list_coord_mac)
+            for idx, i in enumerate(list_position_object_coord):
+                # print('for')
+                print(i)
+                if list(i) == self.mac_final_position:
+                    print('test ok')
+                    if idx == 0:
+                        self.object_pic = pygame.image.load(
+                            "resources/ether.png").convert()
+                        screen.blit(self.object_pic, (800, 50))
+                    elif idx == 1:
+                        self.object_pic = pygame.image.load(
+                            "resources/aiguille.png").convert()
+                        screen.blit(self.object_pic, (800, 100))
+                    elif idx == 2:
+                        self.object_pic = pygame.image.load(
+                            "resources/tube.png").convert()
+                        screen.blit(self.object_pic, (800, 150))
+
+            return self.mac_final_position
+
 
 class object():
 
