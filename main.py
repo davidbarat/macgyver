@@ -15,6 +15,7 @@ my_maze = maze()
 my_maze.init_screen()
 # list_rock, mac_position = my_maze.create_maze()
 list_rock = my_maze.create_maze()
+position_keeper = my_maze.position_keeper
 # print('position de mac')
 # print(my_maze.mac_position)
 # david = my_maze.mac_position
@@ -32,6 +33,7 @@ for idx, item in enumerate(list_object):
 
 print(list_position_object_coord)
 macgyver = character()
+count_object = macgyver.count_object
 
 # Main
 while go:
@@ -41,6 +43,9 @@ while go:
             go = False
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_DOWN:
+                macgyver.check_win(my_maze.mac_position,
+                                   position_keeper,
+                                   count_object)
                 if not macgyver.check_wall('down',
                                            list_rock, my_maze.mac_position):
                     new_position_mac = macgyver.move('down',
@@ -74,6 +79,7 @@ while go:
                                                      )
             my_maze.mac_position = new_position_mac
             print('count object ', macgyver.count_object)
+
 
     pygame.display.flip()
 

@@ -22,7 +22,6 @@ class maze():
 
     def get_limit_maze(self):
 
-        # file = open('resources/lab.txt', 'r')
         with open('resources/lab.txt') as file:
             numberofline = 0
             for line in file:
@@ -59,11 +58,12 @@ class maze():
                     self.screen.blit(mac_pic, cursor_position)
                     cursor_width += 50
 
-                if char == 'G':
+                if char == 'K':
                     cursor_position = (cursor_width, cursor_height)
                     badguy_pic = pygame.image.load(
                         "resources/Gardien.png").convert()
                     self.screen.blit(badguy_pic, cursor_position)
+                    self.position_keeper = [(cursor_width, cursor_height)]
                     cursor_width += 50
 
                 if char == '.':
@@ -130,7 +130,6 @@ class character():
         else:
             return False
 
-
     def move(self, direction, mac_position, screen, list_position_object_coord):
 
         # self.mac_initial_position_list = list(mac_position)
@@ -183,7 +182,8 @@ class character():
             print("compare position mac pos object")
             print(list_position_object_coord)
             print(self.list_coord_mac)
-            for idx, i in enumerate(list_position_object_coord):
+            self.list_position_coord_temp = list_position_object_coord
+            for idx, i in enumerate(self.list_position_coord_temp):
                 if list(i) == self.mac_final_position:
                     """ attention count, il incremente mm qd
                     objet est déja récupéré"""
@@ -191,21 +191,33 @@ class character():
                     self.font = pygame.font.SysFont('Comic Sans MS', 30)
                     self.color = (132, 0, 140)
                     self.text = self.font.render("Inventory", True, self.color)
-                    # screen.blit(self.text, (775, 0))
+                    screen.blit(self.text, (775, 0))
                     if idx == 0:
                         self.object_pic = pygame.image.load(
                             "resources/ether.png").convert()
                         screen.blit(self.object_pic, (800, 50))
+                        self.list_position_coord_temp[idx] = [(99, 99)]
                     elif idx == 1:
                         self.object_pic = pygame.image.load(
                             "resources/aiguille.png").convert()
                         screen.blit(self.object_pic, (800, 150))
+                        self.list_position_coord_temp[idx] = [(99, 99)]
                     elif idx == 2:
                         self.object_pic = pygame.image.load(
                             "resources/tube.png").convert()
                         screen.blit(self.object_pic, (800, 250))
+                        self.list_position_coord_temp[idx] = [(99, 99)]
 
-            return self.mac_final_position
+        return self.mac_final_position
+
+    def check_win(self, mac_position, position_keeper, count_object):
+        # self.mac_final_position = mac_position
+        print('-------------------------------------')
+        print('check_win')
+        print(mac_position)
+        print(position_keeper)
+        if (mac_position) in position_keeper and count_object == 3:
+            print('you win')
 
 
 class object():
