@@ -1,17 +1,15 @@
-import pygame
+import pygame, mutagen.mp3
 import random
 
 
+
 class maze():
-    # mac_position = []
 
     def __init__(self):
 
         print('init maze')
         self.list_position_rock = []
         self.mac_position = []
-        # self.size = 0
-        # self.screen = 0
 
     def init_screen(self):
 
@@ -31,14 +29,12 @@ class maze():
 
     def create_maze(self):
 
-        # creating maze
-        # file = open('resources/lab.txt', 'r')
+        # create maze
         cursor_width = 0
         cursor_height = 0
         with open('resources/lab.txt') as file:
             while 1:
                 char = file.read(1)
-
                 if not char:
                     break
                 if char == 'x':
@@ -77,23 +73,18 @@ class maze():
                     cursor_width = 0
                     cursor_height += 50
 
-            # print(self.list_position_rock)
-            # file.close()
-            # return self.list_position_rock, self.mac_position
             return self.list_position_rock
 
 
 class character():
 
     def __init__(self):
-        print('class character')
         # 15 sprites by 50 pixels
         self.width_limit = 14 * 50
         self.height_limit = 14 * 50
         self.width_min = 0
         self.height_min = 0
         self.count_object = 0
-        # self.mac_final_position = maze.mac_position
 
     def check_wall(self, direction, list_rock, mac_position):
         self.mac_final_position = mac_position
@@ -102,28 +93,24 @@ class character():
             self.mac_initial_position_eight = self.mac_final_position[1]
             self.test_position_rock = (self.mac_initial_position_width,
                                        self.mac_initial_position_eight + 50)
-            # print(self.test_position_rock)
 
-        if direction == 'up':
+        elif direction == 'up':
             self.mac_initial_position_width = self.mac_final_position[0]
             self.mac_initial_position_eight = self.mac_final_position[1]
             self.test_position_rock = (self.mac_initial_position_width,
                                        self.mac_initial_position_eight - 50)
-            # print(self.test_position_rock)
 
-        if direction == 'right':
+        elif direction == 'right':
             self.mac_initial_position_width = self.mac_final_position[0]
             self.mac_initial_position_eight = self.mac_final_position[1]
             self.test_position_rock = (self.mac_initial_position_width + 50,
                                        self.mac_initial_position_eight)
-            # print(self.test_position_rock)
 
-        if direction == 'left':
+        elif direction == 'left':
             self.mac_initial_position_width = self.mac_final_position[0]
             self.mac_initial_position_eight = self.mac_final_position[1]
             self.test_position_rock = (self.mac_initial_position_width - 50,
                                        self.mac_initial_position_eight)
-            # print(self.test_position_rock)
 
         if (self.test_position_rock) in list_rock:
             return True
@@ -132,29 +119,25 @@ class character():
 
     def move(self, direction, mac_position, screen, list_position_object_coord):
 
-        # self.mac_initial_position_list = list(mac_position)
-        # print(self.mac_initial_position_list)
-        # self.mac_initial_position_list = list(mac_position)
+        print('move')
         print(self.mac_final_position)
         self.mac_initial_position_width = self.mac_final_position[0]
         self.mac_initial_position_eight = self.mac_final_position[1]
         print(self.mac_initial_position_width, self.mac_initial_position_eight)
-        # self.mac_initial_position_width = mac_position[0]
-        # self.mac_initial_position_eight = mac_position[1]
-        print('move')
+
         # next move
         if direction == 'down':
             self.mac_initial_position_eight += 50
-        if direction == 'up':
+        elif direction == 'up':
             self.mac_initial_position_eight -= 50
-        if direction == 'right':
+        elif direction == 'right':
             self.mac_initial_position_width += 50
-        if direction == 'left':
+        elif direction == 'left':
             self.mac_initial_position_width -= 50
-        # print(self.width_limit)
-        # print(self.height_limit)
+
         print(self.mac_initial_position_width)
         print(self.mac_initial_position_eight)
+        # check_win(my_maze.mac_position, position_keeper, count_object)
         if not (self.mac_initial_position_width > self.width_limit or self.mac_initial_position_eight > self.height_limit or self.mac_initial_position_width < self.width_min or self.mac_initial_position_eight < self.height_min):
             print('je peux mover')
             self.rock_pic = pygame.image.load(
@@ -179,14 +162,12 @@ class character():
             self.list_coord_mac = [(self.mac_final_position[0],
                                     self.mac_final_position[1])]
 
-            print("compare position mac pos object")
-            print(list_position_object_coord)
-            print(self.list_coord_mac)
+            # print("compare position mac pos object")
+            # print(list_position_object_coord)
+            # print(self.list_coord_mac)
             self.list_position_coord_temp = list_position_object_coord
             for idx, i in enumerate(self.list_position_coord_temp):
                 if list(i) == self.mac_final_position:
-                    """ attention count, il incremente mm qd
-                    objet est déja récupéré"""
                     self.count_object += 1
                     self.font = pygame.font.SysFont('Comic Sans MS', 30)
                     self.color = (132, 0, 140)
@@ -210,23 +191,53 @@ class character():
 
         return self.mac_final_position
 
-    def check_win(self, mac_position, position_keeper, count_object):
-        # self.mac_final_position = mac_position
+    def check_win(self, mac_position, position_keeper, count_object, screen):
         print('-------------------------------------')
         print('check_win')
-        print(mac_position)
+        # print(mac_position)
+        # self.check_pos_mac_width = mac_position[0]
+        # self.check_pos_mac_height = mac_position[1]
+        self.calculate_coord_mac = [(mac_position[0], mac_position[1])]
+        print(self.calculate_coord_mac)
         print(position_keeper)
-        if (mac_position) in position_keeper and count_object == 3:
+        print(count_object)
+        print('-------------------------------------')
+        if (self.calculate_coord_mac) == position_keeper and count_object == 3:
             print('you win')
+            mac_pic = pygame.image.load("resources/MacGyver.png").convert()
+            screen.blit(mac_pic, tuple(position_keeper))
+            self.font = pygame.font.SysFont('Comic Sans MS', 40)
+            self.color = (132, 0, 140)
+            self.text = self.font.render("YOU WIN", True, self.color)
+            screen.blit(self.text, (775, 350))
+            # self.mp3 = mutagen.mp3.MP3("resources/MacGyver Theme Song.mp3")
+            self.song_file = "resources/MacGyver Theme Song.mp3"
+
+            self.mp3 = mutagen.mp3.MP3(self.song_file)
+            pygame.mixer.init(frequency=self.mp3.info.sample_rate)
+            pygame.mixer.music.load(self.song_file)
+            pygame.mixer.music.play()
+            return True
+
+        elif (self.calculate_coord_mac) == position_keeper and count_object < 3:
+            print('you die')
+            self.badguy_pic = pygame.image.load(
+                "resources/Gardien.png").convert()
+            screen.blit(self.badguy_pic, tuple(position_keeper))
+            self.font = pygame.font.SysFont('Comic Sans MS', 40)
+            self.color = (132, 0, 140)
+            self.text = self.font.render("YOU DIE", True, self.color)
+            screen.blit(self.text, (775, 350))
+            return False
+
 
 
 class object():
 
     def __init__(self):
 
-        # self.file = open('resources/lab.txt', 'r')
-        self.object_height = 0
-        self.object_width = 0
+        self.object_height = -50
+        self.object_width = -50
         self.list_position_object = []
 
     def get_position(self):
@@ -239,11 +250,11 @@ class object():
                                                       self.object_height))
                 if char == '\n':
                     self.object_height += 50
-                    self.object_width = 0
+                    self.object_width = -50
 
             self.final_position_object = random.sample(
                 self.list_position_object, 3)
-            # print(self.final_position_object)
+
             return(self.final_position_object)
 
     def print_pic(self, t_object, position_coord, screen):
@@ -251,15 +262,13 @@ class object():
             self.object_pic = pygame.image.load(
                 "resources/tube.png").convert()
             screen.blit(self.object_pic, position_coord)
-            # list_position_object_coord.append(position_coord)
+
         if t_object == 'aiguille':
             self.object_pic = pygame.image.load(
                 "resources/aiguille.png").convert()
             screen.blit(self.object_pic, position_coord)
-            # list_position_object_coord.append(position_coord)
+
         if t_object == 'ether':
             self.object_pic = pygame.image.load(
                 "resources/ether.png").convert()
             screen.blit(self.object_pic, position_coord)
-            # list_position_object_coord.append(position_coord)
-        # print(list_position_object_coord)

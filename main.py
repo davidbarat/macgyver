@@ -13,14 +13,9 @@ list_position_object_coord = []
 
 my_maze = maze()
 my_maze.init_screen()
-# list_rock, mac_position = my_maze.create_maze()
 list_rock = my_maze.create_maze()
 position_keeper = my_maze.position_keeper
-# print('position de mac')
-# print(my_maze.mac_position)
-# david = my_maze.mac_position
-# print(david)
-# item get position
+
 for item in list_object:
     item_object = object()
 
@@ -42,10 +37,11 @@ while go:
         if event.type == pygame.QUIT:
             go = False
         elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_DOWN:
-                macgyver.check_win(my_maze.mac_position,
-                                   position_keeper,
-                                   count_object)
+            if macgyver.check_win(my_maze.mac_position,
+                                  position_keeper,
+                                  macgyver.count_object, my_maze.screen):
+                print('c est win')
+            elif event.key == pygame.K_DOWN:
                 if not macgyver.check_wall('down',
                                            list_rock, my_maze.mac_position):
                     new_position_mac = macgyver.move('down',
@@ -53,7 +49,7 @@ while go:
                                                      my_maze.screen,
                                                      list_position_object_coord
                                                      )
-            if event.key == pygame.K_UP:
+            elif event.key == pygame.K_UP:
                 if not macgyver.check_wall('up',
                                            list_rock, my_maze.mac_position):
                     new_position_mac = macgyver.move('up',
@@ -61,7 +57,7 @@ while go:
                                                      my_maze.screen,
                                                      list_position_object_coord
                                                      )
-            if event.key == pygame.K_RIGHT:
+            elif event.key == pygame.K_RIGHT:
                 if not macgyver.check_wall('right',
                                            list_rock, my_maze.mac_position):
                     new_position_mac = macgyver.move('right',
@@ -69,7 +65,7 @@ while go:
                                                      my_maze.screen,
                                                      list_position_object_coord
                                                      )
-            if event.key == pygame.K_LEFT:
+            elif event.key == pygame.K_LEFT:
                 if not macgyver.check_wall('left',
                                            list_rock, my_maze.mac_position):
                     new_position_mac = macgyver.move('left',
@@ -80,10 +76,9 @@ while go:
             my_maze.mac_position = new_position_mac
             print('count object ', macgyver.count_object)
 
-
     pygame.display.flip()
 
     # Limit to 60 frames per second
-    clock.tick(60)
+    clock.tick(120)
 
 pygame.quit()
