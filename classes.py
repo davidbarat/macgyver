@@ -1,6 +1,8 @@
 import pygame
-import mutagen.mp3
+# import mutagen.mp3
 import random
+import sys
+import wave
 
 
 class maze():
@@ -17,6 +19,7 @@ class maze():
         pygame.display.set_caption("MacGyver maze")
         self.size = (900, 850)
         self.screen = pygame.display.set_mode(self.size)
+        self.go = True
 
     def get_limit_maze(self):
 
@@ -120,9 +123,11 @@ class character():
 
     def move(self, direction, mac_position, screen, list_position_object_coord):
 
-        print('----------------------')
-        print('move')
-        print(self.mac_final_position)
+        # print('----------------------')
+        # print('move')
+        # print(self.mac_final_position)
+        # print('---')
+        # print(list_position_object_coord)
         self.mac_initial_position_width = self.mac_final_position[0]
         self.mac_initial_position_eight = self.mac_final_position[1]
         # print(self.mac_initial_position_width, self.mac_initial_position_eight)
@@ -139,7 +144,6 @@ class character():
 
         # print(self.mac_initial_position_width)
         # print(self.mac_initial_position_eight)
-        # check_win(my_maze.mac_position, position_keeper, count_object)
         if not (self.mac_initial_position_width > self.width_limit or self.mac_initial_position_eight > self.height_limit or self.mac_initial_position_width < self.width_min or self.mac_initial_position_eight < self.height_min):
             print('je peux mover')
             self.rock_pic = pygame.image.load(
@@ -151,12 +155,13 @@ class character():
                         self.mac_initial_position_width,
                         self.mac_initial_position_eight))
             # print(mac_position)
-            del self.mac_final_position
+            # del self.mac_final_position
             self.mac_final_position = [self.mac_initial_position_width,
                                        self.mac_initial_position_eight]
             """ mac_position = [self.mac_initial_position_width,
                             self.mac_initial_position_eight]"""
             # print(list_position_object_coord)
+            # print('mac_final_position')
             # print(self.mac_final_position)
             # print(list_position_object_coord)
             # self.coord_x_mac = self.mac_final_position[0]
@@ -171,10 +176,10 @@ class character():
             for idx, i in enumerate(self.list_position_coord_temp):
                 if list(i) == self.mac_final_position:
                     self.count_object += 1
-                    self.font = pygame.font.SysFont('Comic Sans MS', 30)
-                    self.color = (132, 0, 140)
-                    self.text = self.font.render("Inventory", True, self.color)
-                    screen.blit(self.text, (775, 0))
+                    # self.font = pygame.font.SysFont('Comic Sans MS', 30)
+                    # self.color = (132, 0, 140)
+                    # self.text = self.font.render("Inventory", True, self.color)
+                    # screen.blit(self.text, (775, 0))
                     if idx == 0:
                         self.object_pic = pygame.image.load(
                             "resources/ether.png").convert()
@@ -201,6 +206,9 @@ class character():
         # self.check_pos_mac_height = mac_position[1]
         self.calculate_coord_mac = [(mac_position[0], mac_position[1])]
         # print(self.calculate_coord_mac)
+        # print('position de mac du check win')
+        # print(mac_position)
+        # print('position_keeper')
         # print(position_keeper)
         # print(count_object)
         # print('-------------------------------------')
@@ -208,28 +216,35 @@ class character():
             print('you win')
             mac_pic = pygame.image.load("resources/MacGyver.png").convert()
             screen.blit(mac_pic, tuple(position_keeper))
-            self.font = pygame.font.SysFont('Comic Sans MS', 40)
-            self.color = (132, 0, 140)
-            self.text = self.font.render("YOU WIN", True, self.color)
-            screen.blit(self.text, (775, 350))
+            # self.font = pygame.font.SysFont('Comic Sans MS', 40)
+            # self.color = (132, 0, 140)
+            # self.text = self.font.render("YOU WIN", True, self.color)
+            # screen.blit(self.text, (775, 350))
             # self.mp3 = mutagen.mp3.MP3("resources/MacGyver Theme Song.mp3")
-            self.song_file = "resources/MacGyver Theme Song.mp3"
+            # self.song_file = "resources/MacGyver Theme Song.mp3"
 
-            self.mp3 = mutagen.mp3.MP3(self.song_file)
-            pygame.mixer.init(frequency=self.mp3.info.sample_rate)
-            pygame.mixer.music.load(self.song_file)
-            pygame.mixer.music.play()
+            # self.mp3 = mutagen.mp3.MP3(self.song_file)
+            # pygame.mixer.init(frequency=self.mp3.info.sample_rate)
+            self.file_path = 'resources/MacGyver Theme Song.wav'
+            self.file_wav = wave.open(self.file_path)
+            self.frequency = self.file_wav.getframerate()
+            pygame.mixer.init(frequency=self.frequency)
+            pygame.mixer.music.load(self.file_path)
+            pygame.mixer.music.play(-1)
+            return True
 
         elif (self.calculate_coord_mac) == position_keeper and count_object < 3:
             print('you die')
             self.badguy_pic = pygame.image.load(
                 "resources/Gardien.png").convert()
             screen.blit(self.badguy_pic, tuple(position_keeper))
-            self.font = pygame.font.SysFont('Comic Sans MS', 40)
-            self.color = (132, 0, 140)
-            self.text = self.font.render("YOU DIE", True, self.color)
-            screen.blit(self.text, (775, 350))
-            return False
+            # self.font = pygame.font.SysFont('Comic Sans MS', 40)
+            # self.color = (132, 0, 140)
+            # self.text = self.font.render("YOU DIE", True, self.color)
+            # screen.blit(self.text, (775, 350))
+            # pygame.time.wait(10000)
+            pygame.quit()
+            sys.exit()
 
 
 class object():
@@ -248,13 +263,18 @@ class object():
                     self.list_position_object.append((self.object_width,
                                                       self.object_height))
                     self.object_width += 50
-                if char == '\n':
+                elif char == '\n':
                     self.object_height += 50
                     self.object_width = 0
+                else:
+                    self.object_width += 50
 
             self.final_position_object = random.sample(
                 self.list_position_object, 3)
-
+            print('list position object')
+            print(self.list_position_object)
+            print('list pos objetc')
+            print(self.final_position_object)
             return(self.final_position_object)
 
     def print_pic(self, t_object, position_coord, screen):
