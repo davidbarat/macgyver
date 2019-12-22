@@ -1,3 +1,5 @@
 {
-    "python.pythonPath": "/Users/david/.virtualenvs/mysql/bin/python"
+    "python.pythonPath": "/Users/david/.virtualenvs/mac/bin/python",
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true
 }

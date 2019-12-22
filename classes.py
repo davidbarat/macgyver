@@ -120,8 +120,8 @@ class character():
         else:
             return False
 
-    def move(self, direction, mac_position, screen, 
-    list_position_object_coord):
+    def move(self, direction, mac_position, screen,
+             list_position_object_coord):
 
         # print('move')
         # print(self.mac_final_position)
@@ -141,10 +141,10 @@ class character():
 
         # print(self.mac_initial_position_width)
         # print(self.mac_initial_position_eight)
-        if not (self.mac_initial_position_width > self.width_limit or 
-        self.mac_initial_position_eight > self.height_limit or
-        self.mac_initial_position_width < self.width_min or
-        self.mac_initial_position_eight < self.height_min):
+        if not (self.mac_initial_position_width > self.width_limit or
+           self.mac_initial_position_eight > self.height_limit or
+           self.mac_initial_position_width < self.width_min or
+           self.mac_initial_position_eight < self.height_min):
             # print('je peux mover')
             self.rock_pic = pygame.image.load(
                 "resources/floor.png").convert()
