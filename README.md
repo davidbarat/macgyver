@@ -14,5 +14,5 @@ python main.py
 
 ## Prerequisites
 
-Python 3.6 at least
-You have to install pygame python module
+* Python 3.6 at least
+* You have to install pygame python module
