@@ -10,6 +10,7 @@ Help Macgyver to find 3 differents items into a maze : ether, tube and syringue.
 
 Fork the project on your local machine and launch the game with the command below :
 
+    pip install -r requirements.txt
     python main.py
 
 ## Prerequisites
