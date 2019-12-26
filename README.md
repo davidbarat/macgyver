@@ -12,8 +12,3 @@ Fork the project on your local machine and launch the game with the command belo
 
     pip install -r requirements.txt
     python main.py
-
-## Prerequisites
-
-* Python 3.6 at least
-* You have to install pygame python module
